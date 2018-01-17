@@ -27,7 +27,7 @@ public class SignController {
     }
 
     /**
-     * 删除
+     * 删除signBean
      * @param signBean
      */
     @RequestMapping("/delSign")
