@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.loan.carmag.mapper.CarMapper">
+
+	<resultMap type="org.project.loan.beans.CarBean"  id="carBean">
+		<id column="car_id" property="carId" />
+		<result column="car_number"   property="carNumber" />
+		<result column="car_model"  property="carModel" />
+		<result column = "car_color"   property = "carColor"/>
+		<result column="car_engine"  property="carEngine" />
+		<result column="car_onedata"  property="carOnedata" />
+		<result column="car_twodata"  property="carTwodata" />
+		<result column="car_frame"   property="carFrame" />
+		<result column="car_price"  property="carPrice" />
+		<result column="car_mileage"  property="carMileage" />
+		<result column="car_idcard"  property="carIdcard" />
+		<result column="car_permit"  property="carPermit" />
+		<result column="car_traffic"  property="carTraffic" />
+		<result column="car_key"  property="carKey" />
+		<result column="car_registration"  property="carRegistration" />
+		<result column="car_business"  property="carBusiness" />
+		<result column="car_travel"    property="carTravel" />
+		<result column="car_invoice"   property="carInvoice" />
+		<result column="car_tax"  property="carTax" />
+		<result column="car_import"   property="carImport" />
+		<result column="car_assessment"  property="carAssessment" />
+		<result column="car_photo"    property="carPhoto" />
+		<result column="car_certificate"   property="carCertificate" />
+		<result column="car_driving"   property="carDriving" />
+		<result column="car_commercial"   property="carCommercial" />
+		<result column="car_insurance"   property="carInsurance" />
+		<result column="car_other"   property="carOther" />
+
+		<!-- 一对多的关系 -->
+		<!-- property: 指的是集合属性的值, ofType：指的是集合中元素的类型 -->
+		<collection property="cgbList" ofType="org.project.loan.beans.CarGoodsBean"   >
+			<id column="cargoods_id" property="id" />
+			<result column="cargoods_name" property="cargoodsName" />
+			<result column="cargoods_num" property="cargoodsNum" />
+		</collection>
+<!-- 		  <collection property="cgbList" column="classID" javaType="ArrayList" 
+                ofType="com.cn.hnust.pojo.StudentEntity" select="getStudentByClassID"/> -->
+	</resultMap>
+
+	<select id="findCarById"   resultMap="carBean">
+		select * from t_car left join t_cargoods  on car_id =fk_car_id where car_id =  #{id}
+	</select>
+
+<!-- 	<select id="findCarGoods"  ></select> -->
+
+</mapper>  

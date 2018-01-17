@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+			<table id="usertable" style="width: auto; height: auto" title="用户列表"
+		iconCls="icon-save" toolbar="#user_header" singleSelect="true"
+		rownumbers="true" pagination="true">
+		<thead>
+			<tr>
+				<th field="userId" width="10%">序号</th>
+				<th field="userName" width="15%">真实姓名</th>
+				<th field="userLoginName" width="15%">登录名</th>
+				<th field="userPassword" width="20%">密码</th>
+				<th
+					data-options="field:'roleName',formatter:function(value,row,index){
+                  if (row.userRoleBean){
+                    return row.userRoleBean.roleName;
+                } else {
+                    return '';
+                }
+     }"
+					width="10%">角色</th>
+				<th
+					data-options="field:'companyName',formatter:function(value,row,index){
+                  if (row.userCompanyBean){
+                    return row.userCompanyBean.companyName; 
+                } else {
+                    return '';
+                }
+     }"
+					width="30%">所属公司</th>
+				
+			</tr>
+		</thead>
+	</table>
+		<div id="user_header" style="padding:5px;height:auto">
+
+			<div>
+				姓名: <input class="easyui-textbox" type="text" style="width:80px" id="username">
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" onclick="doSearch()">查询</a>
+			</div>
+			<div style="margin-bottom:5px">
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="$('#add').window('open')">新增用户</a>
+				<a class="easyui-linkbutton" iconcls="icon-edit" href="javascript:void(0)" plain="true" onclick="updateUser()">修改用户</a>
+   				<a class="easyui-linkbutton" iconcls="icon-cancel" href="javascript:void(0)"plain="true" onclick="deleteUser()">删除用户</a>
+			</div>
+		</div>
+
+		<div id="add" class="easyui-window" title="新增用户" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:270px;padding:10px;">
+			<div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">用户信息</div>
+			<form id="adduser" method="post">
+				<table id="usert1"  cellpadding="5" style="border:1px solid #ccc ;">
+
+					<tr>
+						<td>姓名:</td>
+						<td><input class="easyui-validatebox easyui-textbox" type="text" name="userName" data-options="required:true,validType:'CHS'" style="width: 160px;"></input>
+						</td>
+						<td>登录名:</td>
+						<td><input class="easyui-validatebox easyui-textbox" type="text" name="userLoginName" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>密码:</td>
+						<td><input class="easyui-validatebox easyui-textbox" type="text" name="userPassword" data-options="required:true,validType:'OnlyCode'" style="width: 160px;"></input>
+						</td>
+						<td>所属公司:</td>
+						<td><input class="easyui-combobox " type="text" name="companyName" data-options="required:true" style="width: 160px;" id="company1"></input>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>用户角色:</td>
+						<td><input class="easyui-combobox" type="text" name="roleName" data-options="required:true" style="width: 160px;" id="role1"></input>
+						</td>
+					</tr>
+					
+				</table>
+
+			</form>
+			
+			
+			<div style="text-align:center;padding:10px;">
+	    	<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser1()" id="save">提交</a>
+	    	<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="$('#wuser').window('close')" id="c2">取消</a>
+	    	</div>
+	    	</div>
+			
+			<div id="update" class="easyui-window" title="修改用户" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:500px;height:270px;padding:10px;">
+			<div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">用户信息</div>
+			<form id="updateuser" method="post">
+				<table id="usert2"  cellpadding="5" style="border:1px solid #ccc ;">
+
+					<tr>
+						<td>姓名:</td>
+						<td><input class="easyui-validatebox easyui-textbox" type="text" name="userName" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						<td>登录名:</td>
+						<td><input class="easyui-validatebox easyui-textbox" type="text" name="userLoginName" data-options="required:true,validType:'username'" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>密码:</td>
+						<td><input class="easyui-validatebox easyui-textbox" type="text" name="userPassword" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						<td>所属公司:</td>
+						<td><input class="easyui-combobox" type="text" name="companyName" data-options="required:true" style="width: 160px;" id="company2"></input>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>用户角色:</td>
+						<td><input class="easyui-combobox" type="text" name="roleName" data-options="required:true" style="width: 160px;" id="role2"></input>
+						</td>
+						<td><input type="hidden" name="userId"></input>
+						</td>
+					</tr>					
+				</table>
+			</form>
+			
+		<div style="text-align:center;padding:10px;">
+	    	<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="updateUser1()" id="s2">提交</a>
+	    	<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="$('#update').window('close')" id="c2">取消</a>
+	    </div>
+	    
+	    
+		</div>
+			<script>
+			$('#usertable').datagrid({
+				url : '../../user/userList',
+				method : 'POST',
+				loadMsg : '加载中……',
+				queryParams : {
+					username : $("#username").val()
+				}
+			});
+			
+				$('#company1').combobox({
+				    url:'../../company/companyList',
+				    valueField:'companyId',
+				    editable:false,
+				    textField:'companyName'
+				});
+				$('#company2').combobox({
+				    url:'../../company/companyList',
+				    valueField:'companyId',
+				    editable:false,
+				    textField:'companyName'
+				});
+				$('#role1').combobox({
+				    url:'../../role/roleList',
+				    valueField:'roleId',
+				    editable:false,
+				    textField:'roleName'
+				});
+				$('#role2').combobox({
+				    url:'../../role/roleList',
+				    valueField:'roleId',
+				    editable:false,
+				    textField:'roleName',
+				    
+				});
+			
+			
+			function doSearch() {
+				$('#usertable').datagrid('load', {
+					username : $("#username").val()
+				});
+			}
+
+			function updateUser() {
+				var row = $('#usertable').datagrid('getSelected');
+				
+				if (row) {
+					$('#update').window('open');
+					$('#updateuser').form('load', row);
+					$('#company2').combobox('setValue',row.userCompanyBean.companyId);//一定要先value后text,否则text与value值会相同全为value值  
+					$('#company2').combobox('setText', row.userCompanyBean.companyName); 
+					$('#role2').combobox('setValue', row.userRoleBean.roleId); 
+					$('#role2').combobox('setText', row.userRoleBean.roleName); 					
+				} else {
+					$.messager.show({
+						title : '提示信息',
+						msg : '请选择需要修改的列表项!',
+						timeout : 500,
+						showType : null,
+						style : {},
+						width:250,                           //设置弹框的宽度和高度
+			            height:150
+					});
+				}
+			}
+			
+			function deleteUser(){
+				var row = $('#usertable').datagrid('getSelected');// 取得所有被选择的行数
+				if(row){
+					$.messager.confirm('提醒', '请确认是否要真的删除这个用户?', function(r){
+						if (r){						
+							$.ajax({
+								   type: "POST",
+								   url: "../../user/deleteUser",
+								   async:true,
+								   data:{userId:row.userId},
+								   success: function(msg){
+									   $.messager.show({
+											title:'提示信息',
+											msg:msg.information,
+											timeout:500,
+											showType : null,
+											style : {},
+											width:250,                           //设置弹框的宽度和高度
+								            height:150
+										});
+									   $('#usertable').datagrid('reload');
+								   }
+						      });
+						}
+					});
+					
+				}else{
+					$.messager.show({
+						title:'提示信息',
+						msg:'请选择需要删除的列表项！',
+						timeout:500,
+						showType : null,
+						style : {},
+						width:250,                           //设置弹框的宽度和高度
+			            height:150
+					});
+					
+
+				}
+			};
+
+			function updateUser1() {		
+				$('#updateuser').form('submit', {
+					type: "POST",
+					url :'../../user/updateUser',
+					 async:true,
+					success : function(msg) {
+						$('#update').window('close');
+						$.messager.show({
+							title:'提示信息',
+							msg:"修改成功！",
+							timeout:500,
+							showType : null,
+							style : {},
+							width:250,                           //设置弹框的宽度和高度
+				            height:150
+						});
+						
+						$('#usertable').datagrid('reload');
+					}
+				});
+
+			}
+			function saveUser1() {		
+				$('#adduser').form('submit', {
+					type: "POST",
+					url :'../../user/addUser',
+					success : function(msg) {
+						$.messager.show({
+							title:'提示信息',
+							msg:"添加成功！",
+							timeout:500,
+							showType : null,
+							style : {},
+							width:250,                           //设置弹框的宽度和高度
+				            height:150
+						});
+						$('#add').window('close');
+						$('#usertable').datagrid('reload');
+					}
+				});
+
+			}
+	</script>
+
+	</body>
+</html>

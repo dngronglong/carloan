@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.loan.customermag.mapper.CustomerMapper">
+	<resultMap type="org.project.loan.beans.CustomerBean" id="customerMap">
+		<id property="customerId" column="customer_id" javaType="java.lang.Integer" />
+		<result property="customerEducation" column="customer_education"/>
+		<result property="customerPhone" column="customer_phone"/>
+		<result property="customerTel" column="customer_tel" javaType="java.lang.Integer" />
+		<result property="customerMarry" column="customer_marry"/>
+		<result property="customerChild" column="customer_child" />
+		<result property="customerHouse" column="customer_house"/>
+		<result property="customerChum" column="customer_chum"/>
+		<result property="customerNewAddress" column="customer_newAddress"/>
+		<result property="customerType" column="customer_type"/>
+		<result property="customerCompany" column="customer_company"/>
+		<result property="customerComAdderss" column="customer_comAdderss"/>
+		<result property="customerComNun" column="customer_comNun"/>
+		<result property="customerPostcode" column="customer_postcode" />
+		<result property="customerJoinCom" column="customer_joinCom"/>
+		<result property="customerDepartment" column="customer_department"/>
+		<result property="customerDuty" column="customer_duty"/>
+		<result property="customerScale" column="customer_scale"/>
+		<result property="customerSort" column="customer_sort"/>
+		<result property="customerQuality" column="customer_quality"/>
+		<result property="customerDemand" column="customer_demand"/>
+		<result property="customerIncome" column="customer_income"/>
+		<result property="customerPayLimit" column="customer_payLimit"/>
+		<result property="customerIendLimit" column="customer_lendLimit"/>
+		<result property="customer_lendTime" column="customer_lendTime" />
+		<result property="customerKnow" column="customer_know"/>
+		<result property="customerDate" column="customer_date" />
+		<result property="customerSaleman" column="customer_saleman"/>
+		<result property="customerCommissioner" column="customer_commissioner" />
+		<result property="customerIdcard" column="customer_idcard"/>
+		<result property="customerApplication" column="customer_application"/>
+		<result property="customerEnclosure" column="customer_enclosure"/>
+
+		<association property="customerIdcardBean" javaType="IdCardBean"
+			select="org.project.loan.idcardmag.mapper.IdCardMapper.findIdCardById" column="fk_idcard_id">
+		</association>
+
+		<collection property="customerContactsList" ofType="org.project.loan.beans.ContactsBean">
+			<id property="contactsId" column="contacts_id" />
+			<result property="contactsName" column="contacts_name" />
+			<result property="contactsPhone" column="contacts_phone" />
+			<result property="contactsType" column="contacts_type" />
+			<result property="contactsRelation" column="contacts_relation" />
+			<result property="contactsCompany" column="contacts_company" />
+			<result property="contactsAddress" column="contacts_address" />
+		</collection>
+
+
+	</resultMap>
+
+	<select id="findCustomerById" resultMap="customerMap">
+		select * from t_customer where customer_id = #{customerId}
+	</select>
+	
+
+</mapper>

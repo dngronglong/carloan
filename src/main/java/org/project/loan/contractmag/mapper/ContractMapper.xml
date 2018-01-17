@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.project.loan.contractmag.mapper.ContractMapper">
+	<resultMap type="ContractBean" id="ContractMap">
+		<id property="contractId" column="contract_id" />
+		<result property="contractManager" column="contract_manager" />
+		<result property="contractNumber" column="contract_number" />
+		<result property="contractCompanyname" column="contract_companyname" />
+		<result property="contractIntime" column="contract_intime" />
+		<result property="contractRechecktime" column="contract_rechecktime" />
+		<result property="contractLoan" column="contract_loan" />
+		<result property="contractSigntime" column="contract_signtime" />
+		<result property="contractMessage" column="contract_message" />
+		<result property="contractBasemessage" column="contract_basemessage" />
+		<result property="contractCarmessage" column="contract_carmessage" />
+		<result property="contractStatus" column="contract_status" />
+		<result property="version" column="version" />
+		<!-- 客户基本信息 -->
+		<association property="contractCustomerBean" javaType="CustomerBean"
+			select="org.project.loan.customermag.mapper.CustomerMapper.findCustomerById" column="fk_customer_id">
+		</association>
+		
+		<!-- 车辆基本信息 -->
+		<association property="contractCarBean" javaType="CarBean"
+			select="org.project.loan.carmag.mapper.CarMapper.findCarById" column="fk_car_id">
+		</association>
+		<!--  信用基本信息 -->
+		<association property="contractHonorBean" javaType="HonorBean"
+			select="org.project.loan.honormag.mapper.HonorMapper.findHonorById" column="fk_honor_id">
+		</association>
+		
+		<!--  选择的产品-->
+		<association property="contractProductBean" javaType="ProductBean"
+			select="org.project.loan.productsmag.mapper.ProductsMapping.findProductbyId" column="fk_products">
+		</association>
+		
+		<!-- 签约信息表 -->
+		<association property="signBean" javaType="SignBean"
+			select="org.project.loan.signmag.mapper.SignMapper.findSignById" column="fk_sign_id">
+		</association>
+		
+		
+		
+		
+	</resultMap>
+
+	<select id="gettotal" resultType="int">
+		select count(contract_id) from t_contract
+		<include refid="commonSql"></include>
+	</select>
+
+	<select id="findContractByPage" resultMap="ContractMap">
+		select * from t_contract
+		<include refid="commonSql"></include>
+		limit #{pager.index},#{pager.nums}
+	</select>
+
+	<sql id="commonSql">
+		<where>
+			<if
+				test="pager.params.contractNumber!= null and pager.params.contractNumber!='' ">
+				contract_number=#{pager.params.contractNumber}
+			</if>
+			<if
+				test="pager.params.contractCompanyname!= null and pager.params.contractCompanyname!=''">
+				and contract_companyname=#{pager.params.contractCompanyname}
+			</if>
+			<if test="pager.params.contractStatus!=null">
+				and contract_status=#{pager.params.contractStatus}
+			</if>
+		</where>
+
+	</sql>
+
+
+
+
+</mapper>

@@ -1,0 +1,409 @@
+<!--<%@ page contentType="text/html;charset=UTF-8" language="java" %>-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <!--<script src="../../js/sign.js" type="text/javascript"></script>-->
+    <!--<script type="text/javascript" src="../../js/jquery-1.8.0.min.js"></script>-->
+</head>
+<body>
+			<table id="signtable" style="width: auto; height: 250px" title="车贷签约"
+		iconCls="icon-save" toolbar="#tbsgin" singleSelect="true"
+		rownumbers="true" pagination="true">
+		<thead>
+			<tr>
+				<th field="contractId" width="10%">序号</th>
+				<th field="contractNumber" width="30%">合同编号</th>
+				<th
+					data-options="field:'customerName',formatter:function(value,row,index){
+                  if (row.contractCustomerBean){
+                    return row.contractCustomerBean.customerIdcardBean.customerName; 
+                } else {
+                    return '';
+                }
+     }"
+					width="10%">借款人</th>
+				<th
+					data-options="field:'customerNumber',formatter:function(value,row,index){
+                  if (row.contractCustomerBean){
+                    return row.contractCustomerBean.customerIdcardBean.customerNumber; 
+                } else {
+                    return '';
+                }
+     }"
+					width="20%">身份证号码</th>
+					<th field="contractManager" width="10%">业务经理</th>
+				<th field="contractCompanyname" width="20%">分公司</th>
+			</tr>
+		</thead>
+	</table>
+<div id="tbsgin" style="padding:5px;height:auto">
+
+    <div>
+        合同编号: <input class="easyui-textbox" type="text" style="width:80px" id="contractNumber"> 借款人: <input class="easyui-textbox"
+                                                                                        type="text" style="width:80px">
+        分公司:
+        <input class="easyui-combobox" style="width:100px" url="" valueField="id" textField="text" id="contractCompanyname">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+    </div>
+    <div style="margin-bottom: 5px">
+        <a href="javascript:void(0)" class="easyui-linkbutton"
+           iconCls="icon-add" id="qianYue" plain="true">新增签约</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton"
+           iconCls="icon-add" plain="true" onclick="del();">撤销</a>
+    </div>
+</div>
+
+<div id="sign" class="easyui-window" title="签约信息" data-options="modal:true,closed:true,iconCls:'icon-save'"
+     style="width:700px;height:580px;padding:10px;">
+    <div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">个人基本信息</div>
+    <form id="ff">
+    <table cellpadding="5" id="t5">
+
+        <tr>
+            <td>借款合同:</td>
+            <td><input class="easyui-textbox" type="text" name="contractNumber" id="contract1" data-options="required:true"
+                       style="width: 160px;" disabled="disabled" ></input>
+            </td>
+            <td>借款人:</td>
+            <td><input class="easyui-textbox" type="text" name="customerName" id="name" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>借款人手机:</td>
+            <td><input class="easyui-textbox" type="text" name="customerTel" id="tel" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+            <td>业务经理:</td>
+            <td><input class="easyui-textbox" type="text" name="contractManager" id="manager" data-options="required:true"
+                       style="width: 160px;" disabled="disabled"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>借款用途:</td>
+            <td><input class="easyui-textbox" type="text" name="customerDemand" id="yongTu" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+            <td>职务:</td>
+            <td><input class="easyui-textbox" type="text" name="customerDuty" id="zhiWu" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>身份证:</td>
+            <td><input class="easyui-textbox" type="text" name="customerNumber" id="idCard" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+            <td>借款总额:</td>
+            <td><input class="easyui-textbox" type="text" name="customerIendLimit" id="money" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>咨询服务费:</td>
+            <td><input class="easyui-textbox" type="text" name="ziXun" id="ziXun" data-options="required:true" style="width: 160px;"
+                       disabled="disabled" value="30"></input>
+            </td>
+            <td>月还款金额:</td>
+            <td><input class="easyui-textbox" type="text" name="yueJinE" id="yueJinE" data-options="required:true" style="width: 160px;"
+                       disabled="disabled" value="500"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>额度上限:</td>
+            <td><input class="easyui-textbox" type="text" name="productsMaxmoney" id="shangXian" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+            <td>产品名称:</td>
+            <td><input class="easyui-textbox" type="text" name="productsName" id="chanPin" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>贷款期数:</td>
+            <td><input class="easyui-textbox" type="text" name="productsPeriods" id="qiShu" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+        </tr>
+    </table>
+    </form>
+    <form id="fSign" method="post">
+        <table>
+            <tr>
+                <td>审批金额*:</td>
+                <td><input id="sign_money" class="easyui-textbox" type="text" name="sign_money"
+                           data-options="required:true" style="width: 160px;"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>约定放款日*:</td>
+                <td><input id="sign_date" class="easyui-textbox" type="date" name="sign_date"
+                           data-options="required:true" style="width: 160px;"></input>
+                </td>
+                <td>放款/还款银行*:</td>
+                <td><input id="sign_bank" class="easyui-textbox" type="text" name="sign_bank"
+                           data-options="required:true" style="width: 160px;"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>放款还款账号*:</td>
+                <td><input class="easyui-textbox" id="sign_accountNumber" type="text" name="sign_accountNumber" data-options="required:true"
+                           style="width: 160px;"></input>
+                </td>
+                <td>放款/还款开户银行（支行）*:</td>
+                <td><input id="sign_bankAddress" class="easyui-textbox" type="text" name="sign_bankAddress"
+                           data-options="required:true" style="width: 160px;"></input>
+                </td>
+            </tr>
+        </table>
+        <div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">附件列表</div>
+
+        <table cellpadding="5" id="t1">
+
+            <tr>
+                <td>银行卡</td>
+                <td><input id="sign_bankCard" class="easyui-filebox" name="sign_bankCard" style="width:100%"></input>
+
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>车辆照片</td>
+                <td><input class="easyui-filebox" id="sign_photoForCar" class="easyui-filebox" name="sign_photoForCar"
+                           style="width:100%">
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>机打申请表片</td>
+                <td><input id="sign_application" class="easyui-filebox" name="sign_application" style="width:100%">
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>小额借款服务合同</td>
+                <td><input id="sign_smallTable" class="easyui-filebox" name="sign_smallTable" style="width:100%">
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>授权扣款委托书</td>
+                <td><input id="sign_debit" class="easyui-filebox" name="sign_debit" style="width:100%">
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>授权委托书</td>
+                <td><input id="sign_letterOfAttorney" class="easyui-filebox" name="sign_letterOfAttorney"
+                           style="width:100%">
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+            </tr>
+            <tr>
+                <td>还款计划表</td>
+                <td><input id="sign_repayment" class="easyui-filebox" name="sign_repayment" style="width:100%">
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+
+            </tr>
+            <tr>
+                <td>补充协议</td>
+                <td><input id="sign_agreement" class="easyui-filebox" name="sign_agreement" style="width:100%">
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+
+            </tr>
+            <tr>
+                <td>车辆买卖回购合同</td>
+                <td><input id="sign_contract" class="easyui-filebox" name="sign_contract" style="width:100%">
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+
+            </tr>
+            <tr>
+                <td>授权委托书（车辆处理使用）</td>
+                <td><input id="sign_letterOfAttorneyCar" class="easyui-filebox" name="sign_letterOfAttorneyCar"
+                           style="width:100%">
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+
+            </tr>
+            <tr>
+                <td>车辆入库照片</td>
+                <td><input id="sign_phtotCar" class="easyui-filebox" name="sign_phtotCar" style="width:100%">
+                </td>
+                <td>附件大小</td>
+                <td><input class="easyui-textbox" type="text"
+                           style="width: 160px;"></input>
+                </td>
+
+            </tr>
+        </table>
+
+    </form>
+    <td><button type="button" id="jiSuan">还款试算</button></td>
+    <td><button>打印合同</button></td>
+    <td><button>保存</button></td>
+    <td><button>提交</button></td>
+    <td><button>返回</button></td>
+    <td><button>回退</button></td>
+    <div class="easyui-panel" style="width:600px">
+        <div style="padding:10px 60px 20px 60px">
+            <form id="fff" method="post">
+                <table id="s">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>合同编号</th>
+                            <th>借款人</th>
+                            <th>期数</th>
+                            <th>借款金额</th>
+                            <th>应还金额</th>
+                            <th>每月应还</th>
+                            <th>服务费</th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </form>
+        </div>
+    </div>
+    <a href="javascript:void(0)" class="easyui-linkbutton"
+       iconCls="icon-ok" onclick="submitSignForm()">提交</a>
+
+</div>
+
+<script>
+    function del() {
+        var row = $('#signtable').datagrid('getSelected');
+    }
+    $("#jiSuan").click(function () {
+        var row = $('#signtable').datagrid('getSelected');
+        var rows=row.contractCustomerBean;
+        var ro=rows.customerIdcardBean;
+        var r=row.contractProductBean;
+        var liXi=r.productsRate;//利息
+//        每月还款金额 (简称每月本息) =贷款本金 X月利率×[（1+月利率）^ 还款月数 ]
+        var huan1=liXi/100*Math.pow(1+liXi/100,r.productsPeriods);
+        var huan2=Math.pow(1+liXi/100,r.productsPeriods)-1;
+        //alert(rows.customerIendLimit*(huan1/huan2));
+        var yingHuan=rows.customerIendLimit*(huan1/huan2);
+        $("#s").append("<tr><td>"+1+"</td><td>"+row.contractNumber+"</td><td>"+ro.customerName+"</td><td>"+r.productsPeriods+"</td><td>"+(rows.customerIendLimit)+"</td><td>"+(yingHuan*r.productsPeriods+30).toFixed(2)+"</td><td>"+yingHuan.toFixed(2)+"</td><td>"+30+"</td></tr>");
+    });
+    $("#qianYue").click(function () {
+        var row = $('#signtable').datagrid('getSelected');
+        if (row){
+            var rows=row.contractCustomerBean;
+            var ro=rows.customerIdcardBean;
+            var r=row.contractProductBean;
+//            console.log(row);
+//            console.log(row.contractNumber);
+            $('#ff').form('load', row);
+            $("#ff").form("load",rows);
+            $("#ff").form("load",ro);
+            $("#ff").form("load",r);
+            $('#sign').window('open');
+        }else{
+            alert("你没有选中行");
+        }
+
+    });
+$('#signtable').datagrid({
+	url : '../../contract/contractList',
+	method : 'POST',
+	loadMsg : '加载中……',
+	queryParams : {
+		contractNumber : $("#contractNumber").val(),
+		contractCompanyname : $("#contractCompanyname").val(),
+		contractStatus :1
+	}
+});
+
+
+    function p(s) {
+        return s < 10 ? '0' + s: s;
+    }
+    function submitSignForm() {
+
+        //alert($("#sign_bankCard").filebox("getValue"));
+        var myDate = new Date();
+//获取当前年
+        var year=myDate.getFullYear();
+//获取当前月
+        var month=myDate.getMonth()+1;
+//获取当前日
+        var date=myDate.getDate();
+
+        var now=year+'-'+p(month)+"-"+p(date);
+        var datas={
+            "sign_date":$("#sign_date").val(),
+            "sign_accountNumber":$("#sign_accountNumber").val(),
+            "sign_bankAddress":$("#sign_bankAddress").val(),
+            "sign_bankCard":$("#sign_bankCard").filebox("getValue"),
+            "sign_photoForCar":$("#sign_photoForCar").filebox("getValue"),
+            "sign_application":$("#sign_application").filebox("getValue"),
+            "sign_smallTable":$("#sign_smallTable").filebox("getValue"),
+            "sign_debit":$("#sign_debit").filebox("getValue"),
+            "sign_letterOfAttorney":$("#sign_letterOfAttorney").filebox("getValue"),
+            "sign_repayment":$("#sign_repayment").filebox("getValue"),
+            "sign_agreement":$("#sign_agreement").filebox("getValue"),
+            "sign_contract":$("#sign_contract").filebox("getValue"),
+            "sign_letterOfAttorneyCar":$("#sign_letterOfAttorneyCar").filebox("getValue"),
+            "sign_phtotCar":$("#sign_phtotCar").filebox("getValue"),
+            "sign_money":$("#sign_money").val(),
+            "sign_bank":$("#sign_bank").val(),
+            "sign_time":now
+        };
+        var json=JSON.stringify(datas);
+        console.log(json);
+        console.log(datas);
+        $.ajax({
+            url: '../../sign/addSign',
+            type: 'post', //GET
+            data: json,
+            contentType:'application/json',
+            //timeout:5000,    //超时时间
+            dataType: 'json'    //返回的数据格式：json/org.project.xml/html/script/jsonp/text
+
+        });
+    }
+</script>
+</body>
+</html>

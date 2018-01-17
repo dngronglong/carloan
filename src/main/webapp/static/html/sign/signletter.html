@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+<table id="signletter" style="width: auto; height: 250px" title="审核信息"
+       iconCls="icon-save" toolbar="#tbsgin3" singleSelect="true"
+       rownumbers="true" pagination="true">
+    <thead>
+    <tr>
+        <th field="contractId" width="10%">序号</th>
+        <th field="contractNumber" width="30%">合同编号</th>
+        <th
+                data-options="field:'customerName',formatter:function(value,row,index){
+                  if (row.contractCustomerBean){
+                    return row.contractCustomerBean.customerIdcardBean.customerName; 
+                } else {
+                    return '';
+                }
+     }"
+                width="10%">借款人
+        </th>
+        <th
+                data-options="field:'customerNumber',formatter:function(value,row,index){
+                  if (row.contractCustomerBean){
+                    return row.contractCustomerBean.customerIdcardBean.customerNumber; 
+                } else {
+                    return '';
+                }
+     }"
+                width="30%">身份证号码
+        </th>
+        <th field="contractCompanyname" width="20%">分公司</th>
+    </tr>
+    </thead>
+</table>
+<div id="tbsgin3" style="padding:5px;height:auto">
+
+    <div>
+        合同编号: <input class="easyui-textbox" type="text" style="width:80px"> 借款人: <input class="easyui-textbox"
+                                                                                        type="text" style="width:80px">
+        分公司:
+        <input class="easyui-combobox" style="width:100px" url="" valueField="id" textField="text">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+    </div>
+    <div style="margin-bottom: 5px">
+        <a href="javascript:void(0)" class="easyui-linkbutton"
+           iconCls="icon-add" plain="true" onclick="shenHe()">复审</a>
+
+    </div>
+</div>
+
+<div id="signletter1" class="easyui-window" title="审核信息" data-options="modal:true,closed:true,iconCls:'icon-save'"
+     style="width:700px;height:580px;padding:10px;">
+    <div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">审核信息</div>
+    <form id="ffff">
+    <table cellpadding="5">
+
+        <tr>
+            <td>借款合同编号:</td>
+            <td><input class="easyui-textbox" type="text" name="contractNumber" data-options="required:true"
+                       style="width: 160px;" disabled="disabled"></input>
+            </td>
+            <td>借款人:</td>
+            <td><input class="easyui-textbox" type="text" name="customerName" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>身份证:</td>
+            <td><input class="easyui-textbox" type="text" name="customerNumber" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+            <td>借款人手机:</td>
+            <td><input class="easyui-textbox" type="text" name="customerTel" data-options="required:true"
+                       style="width: 160px;" disabled="disabled"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>业务经理:</td>
+            <td><input class="easyui-textbox" type="text" name="contractManager" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+            <td>借款用途:</td>
+            <td><input class="easyui-textbox" type="text" name="customerDemand" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>职务:</td>
+            <td><input class="easyui-textbox" type="text" name="customerDuty" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+            <td>所属公司:</td>
+            <td><input class="easyui-textbox" type="text" name="customerCompany" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>产品类别:</td>
+            <td><input class="easyui-textbox" type="text" name="productsName" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+            <td>审批额度:</td>
+            <td><input class="easyui-textbox" type="text" name="sign_money" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+        </tr>
+
+        <tr>
+            <td>期数:</td>
+            <td><input class="easyui-textbox" type="text" name="productsPeriods" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+            <td>意见:</td>
+            <td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"
+                       disabled="disabled"></input>
+            </td>
+        </tr>
+
+    </table>
+    <div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">附件列表</div>
+
+    <table cellpadding="5" id="t1">
+
+        <tr>
+            <td>抵押车辆评估表</td>
+            <td>
+                <button><a href="http://www.baidu.com" style="width:100%">文件下载</a></button>
+
+            </td>
+            <td>附件大小</td>
+            <td><input class="easyui-textbox" type="text" name="name" disabled="disabled"
+                       style="width: 160px;"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>车辆照片</td>
+            <td>
+                <button><a style="width:100%">文件下载</a></button>
+            </td>
+            <td>附件大小</td>
+            <td><input class="easyui-textbox" type="text" name="name" disabled="disabled"
+                       style="width: 160px;"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>车辆登记证书</td>
+            <td>
+                <button><a style="width:100%">文件下载</a></button>
+            </td>
+            <td>附件大小</td>
+            <td><input class="easyui-textbox" type="text" name="name" disabled="disabled"
+                       style="width: 160px;"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>车辆行驶证副本</td>
+            <td>
+                <button><a style="width:100%">文件下载</a></button>
+            </td>
+            <td>附件大小</td>
+            <td><input class="easyui-textbox" type="text" name="name" disabled="disabled"
+                       style="width: 160px;"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>保单（交强险）</td>
+            <td>
+                <button><a style="width:100%">文件下载</a></button>
+            </td>
+            <td>附件大小</td>
+            <td><input class="easyui-textbox" type="text" name="name" disabled="disabled"
+                       style="width: 160px;"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>保单（商业险）</td>
+            <td>
+                <button><a style="width:100%">文件下载</a></button>
+            </td>
+            <td>附件大小</td>
+            <td><input class="easyui-textbox" type="text" name="name" disabled="disabled"
+                       style="width: 160px;"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>其他车辆附件</td>
+            <td>
+                <button><a style="width:100%">文件下载</a></button>
+            </td>
+            <td>附件大小</td>
+            <td><input class="easyui-textbox" type="text" name="name" disabled="disabled"
+                       style="width: 160px;"></input>
+            </td>
+        </tr>
+        <tr>
+            <td><a href="javascript:void(0)" class="easyui-linkbutton"
+                   iconCls="icon-add" plain="true" onclick="shenHe()">保存</a>
+                </td>
+            <td><a href="javascript:void(0)" class="easyui-linkbutton"
+                   iconCls="icon-add" plain="true" onclick="shenHe()">返回</a>
+                </td>
+            <td><a href="javascript:void(0)" class="easyui-linkbutton"
+                   iconCls="icon-add" plain="true" onclick="huiTui()">回退</a></td>
+        </tr>
+        <div id="signletter2" class="easyui-window" title="回退" data-options="modal:true,closed:true,iconCls:'icon-save'"
+             style="width:300px;height:220px;padding:10px;">
+            <div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">回退信息</div>
+            <input type="text"><button type="button">确定</button>
+        </div>
+    </table>
+    </form>
+    <script type="text/javascript">
+        function huiTui() {
+            $("#signletter2").window("open");
+        }
+        function shenHe() {
+            var row = $('#signletter').datagrid('getSelected');
+            //console.log(row);
+            if (row){
+                var rows=row.contractCustomerBean;
+                var ro=rows.customerIdcardBean;
+                var r=row.contractProductBean;
+                var rr=row.signBean;
+//                console.log(row);
+//                console.log(row.contractNumber);
+                $('#ffff').form('load', row);
+                $("#ffff").form("load",rows);
+                $("#ffff").form("load",ro);
+                $("#ffff").form("load",r);
+                $("#ffff").form("load",rr);
+                $('#signletter1').window('open');
+            }else{
+                alert("你没有选中行");
+            }
+        }
+        $('#signletter').datagrid({
+            url: '../../contract/contractList',
+            method: 'POST',
+            loadMsg: '加载中……',
+            queryParams: {
+                contractNumber: $("#contractNumber").val(),
+                contractCompanyname: $("#contractCompanyname").val(),
+                contractStatus: 1
+            }
+        });</script>
+
+</div>
+</body>
+</html>

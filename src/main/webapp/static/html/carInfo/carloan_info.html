@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+
+<body>
+	<table id="carinfo" style="width: auto; height: 250px" title="车贷录入"
+		iconCls="icon-save" toolbar="#tbm" singleSelect="true"
+		rownumbers="true" pagination="true">
+		<thead>
+			<tr>
+				<th field="contractId" width="10%">序号</th>
+				<th field="contractNumber" width="30%">合同编号</th>
+				<th
+					data-options="field:'customerName',formatter:function(value,row,index){
+                  if (row.contractCustomerBean){
+                    return row.contractCustomerBean.customerIdcardBean.customerName; 
+                } else {
+                    return '';
+                }
+     }"
+					width="10%">借款人</th>
+				<th
+					data-options="field:'customerNumber',formatter:function(value,row,index){
+                  if (row.contractCustomerBean){
+                    return row.contractCustomerBean.customerIdcardBean.customerNumber; 
+                } else {
+                    return '';
+                }
+     }"
+					width="30%">身份证号码</th>
+				<th field="contractCompanyname" width="20%">分公司</th>
+			</tr>
+		</thead>
+	</table>
+	<div id="tbm" style="padding: 5px; height: auto">
+
+		<div>
+			合同编号: <input class="easyui-textbox" type="text" style="width: 80px"
+				id="contractNumber"> 借款人: <input class="easyui-textbox"
+				type="text" style="width: 80px"> 分公司: <input
+				class="easyui-combobox" style="width: 100px" url="" valueField="id"
+				textField="text" id=""> <a href="javascript:void(0)"
+				class="easyui-linkbutton" iconCls="icon-search" onclick="doSearch()">Search</a>
+		</div>
+
+		<div style="margin-bottom: 5px">
+			<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true" onclick="$('#wbase').window('open')">客户基本信息录入</a>
+			<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true"
+				onclick="$('#car_mss').window('open')">客户车辆信息录入</a>
+				
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-add" plain="true"
+				onclick="$('#customer_credit').window('open')">客户信用信息录入</a>
+
+		</div>
+	</div>
+
+		<div id="wbase" class="easyui-window" title="客户基本信息录入"
+		data-options="modal:true,closed:true,iconCls:'icon-save'"
+		style="width: 700px; height: 580px; padding: 10px;">
+		<div style="margin-bottom: 20px">
+			<div>回退意见:</div>
+			<input class="easyui-textbox" style="width: 100%">
+		</div>
+		<div
+			style="padding: 3px 2px; border-bottom: 1px solid #ccc; margin-bottom: 8px; text-align: center;">个人基本信息</div>
+		<form id="f2" method="post">
+			<table cellpadding="5" id="t1">
+
+				<tr>
+					<td>申请人姓名:</td>
+					<td><input class="easyui-textbox" type="text" name="name" 
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>身份证号码:</td>
+					<td><input class="easyui-textbox" type="text" name="name"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>最高学历:</td>
+					<td><input class="easyui-combobox" type="text" name="customerEducation" id="Education"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>申请人手机号码:</td>
+					<td><input class="easyui-textbox" type="text" name="customerPhone" id="customerPhone"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>户籍地址:</td>
+					<td><input class="easyui-textbox" type="text" name="name"
+						data-options="required:true" style="width: 250px;"></input></td>
+				</tr>
+
+				<tr>
+					<td>申请人电话号码:</td>
+					<td><input class="easyui-textbox" type="text" name="customerTel" id="Tel"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>婚姻状况:</td>
+					<td><input class="easyui-textbox" type="text" name="customerMarry" id="Marry"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>有无子女:</td>
+					<td><input class="easyui-textbox" type="text" name="customerChild" id="Child"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>房产状态:</td>
+					<td><input class="easyui-textbox" type="text" name="customerHouse" id="House"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>共同居住者:</td>
+					<td><input class="easyui-combobox" type="text" name="customerChum" id="Chum"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>现住址:</td>
+					<td><input class="easyui-textbox" type="text" name="customerNewAddress" id="NewAddress"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>客户类型:</td>
+					<td><input class="easyui-combobox" type="text" name="customerType" id="Type"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+			</table>
+
+		</form>
+
+
+		<div
+			style="padding: 3px 2px; border-bottom: 1px solid #ccc; margin-bottom: 8px; text-align: center;">工作信息</div>
+
+		<form id="f2" method="post">
+			<table cellpadding="5" id="t2">
+
+				<tr>
+					<td>工作单位全称:</td>
+					<td><input class="easyui-textbox" type="text" name="customerCompany" id="Company"
+						data-options="required:true" style="width: 160px;"></input></td>
+
+				</tr>
+				<tr>
+					<td>工作单位地址:</td>
+					<td><input class="easyui-textbox" type="text" name="customerComAdderss" id="ComAdderss"
+						data-options="required:true" style="width: 250px;"></input></td>
+
+				</tr>
+
+				<tr>
+					<td>单位电话:</td>
+					<td><input class="easyui-textbox" type="text" name="customerComNun" id="ComNun"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>邮政编码:</td>
+					<td><input class="easyui-textbox" type="text" name="customerPostcode" id="Postcode"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>进入该单位时间:</td>
+					<td><input class="easyui-textbox" type="text" name="customerJoinCom" id="JoinCom"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>所在部门:</td>
+					<td><input class="easyui-textbox" type="text" name="customerDepartment" id="Department"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>担任职务:</td>
+					<td><input class="easyui-textbox" type="text" name="customerDuty" id="Duty"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>公司规模:</td>
+					<td><input class="easyui-textbox" type="text" name="customerScale" id="Scale"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>行业类别:</td>
+					<td><input class="easyui-textbox" type="text" name="customerSort" id="Sort"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>单位性质:</td>
+					<td><input class="easyui-combobox" type="text" name="customerQuality" id="Quality"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+			</table>
+
+		</form>
+
+		<div
+			style="padding: 3px 2px; border-bottom: 1px solid #ccc; margin-bottom: 8px; text-align: center;">借款需求</div>
+
+		<form id="f2" method="post">
+			<table cellpadding="5" id="t3">
+
+				<tr>
+					<td>借款详细用途:</td>
+					<td><input class="easyui-textbox" type="text" name="customerDemand" id="Demand"
+						data-options="required:true" style="width: 250px;"></input></td>
+					<td>月收入:</td>
+					<td><input class="easyui-textbox" type="text" name="customerIncome" id="Income"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>可以承受的月还款额:</td>
+					<td><input class="easyui-textbox" type="text" name="customerPayLimit" id="PayLimit"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>希望申请最长还款期限:</td>
+					<td><input class="easyui-textbox" type="text" name="customer_lendTime" id="lendTime"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+
+				<tr>
+					<td>希望申请借款额度:</td>
+					<td><input class="easyui-textbox" type="text" name="customerIendLimit" id="IendLimit"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>您从何得知正和普惠:</td>
+					<td><input class="easyui-textbox" type="text" name="customerKnow" id="Know"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>申请日期:</td>
+					<td><input class="easyui-textbox" type="text" name="customerDate" id="Date"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>业务员姓名:</td>
+					<td><input class="easyui-textbox" type="text" name="customerSaleman" id="Saleman"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>车贷专员:</td>
+					<td><input class="easyui-textbox" type="text" name="customerCommissioner" id="Commissioner"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+
+			</table>
+
+		</form>
+
+		<div
+			style="padding: 3px 2px; border-bottom: 1px solid #ccc; margin-bottom: 8px; text-align: center;">联系人信息</div>
+		<form id="f2" method="post">
+			<table cellpadding="5" id="t4">
+
+				<tr>
+					<td>姓名:</td>
+					<td><input class="easyui-textbox" type="text" name="name"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>联系人电话:</td>
+					<td><input class="easyui-textbox" type="text" name="name"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>联系人类型:</td>
+					<td><input class="easyui-textbox" type="text" name="name"
+						data-options="required:true" style="width: 160px;"></input></td>
+					<td>和本人关系:</td>
+					<td><input class="easyui-combobox" type="text" name="name"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>单位名称:</td>
+					<td><input class="easyui-textbox" type="text" name="name"
+						data-options="required:true" style="width: 160px;"></input></td>
+				</tr>
+				<tr>
+					<td>家庭住址/单位地址:</td>
+					<td><input class="easyui-textbox" type="text" name="name"
+						data-options="required:true" style="width: 250px;"></input></td>
+				</tr>
+			</table>
+
+		</form>
+
+		<div
+			style="padding: 3px 2px; border-bottom: 1px solid #ccc; margin-bottom: 8px; text-align: center;">附件列表</div>
+			<form id="f2" method="post">
+		<table cellpadding="5" id="t5">
+				
+			<tr>
+				<td>身份证(原件):</td>
+				<td>
+					<div style="margin-bottom: 20px">
+						<div>File1:</div>
+						<input class="easyui-filebox" name="customerIdcard" id="Idcard"
+							data-options="prompt:'Choose a file...'" style="width: 100%" onblur="upperCase()">
+					</div>
+				</td>
+				<td>附件大小:</td>
+				<td><input class="easyui-textbox" type="text" name="name"
+					data-options="required:true" style="width: 160px;"></input></td>
+			</tr>
+			<tr>
+				<td>车贷申请表:</td>
+				<td>
+					<div style="margin-bottom: 20px">
+						<div>File2:</div>
+						<input class="easyui-filebox" name="customerApplication" id="Application"
+							data-options="prompt:'Choose a file...'" style="width: 100%">
+					</div>
+				</td>
+				<td>附件大小:</td>
+				<td><input class="easyui-textbox" type="text" name="name"
+					data-options="required:true" style="width: 160px;"></input></td>
+			</tr>
+			<tr>
+				<td>其他附件:</td>
+				<td>
+					<div style="margin-bottom: 20px">
+						<div>File3:</div>
+						<input class="easyui-filebox" name="customerEnclosure" id="Enclosure"
+							data-options="prompt:'Choose a file...'" style="width: 100%">
+					</div>
+				</td>
+				<td>附件大小:</td>
+				<td><input class="easyui-textbox" type="text" name="name"
+					data-options="required:true" style="width: 160px;"></input></td>
+			</tr>
+		</table>
+		</form>
+		<div style="text-align: center; padding: 10px;">
+			<a href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-ok" onclick="submitForm()" id="b1">提交</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-cancel" onclick="clearForm()" id="c1">保存</a> <a
+				href="javascript:void(0)" class="easyui-linkbutton"
+				iconCls="icon-cancel" onclick="returnForm()" id="r1">返回</a>
+		</div>
+	</div>
+	
+			<div id="car_mss" class="easyui-window" title="车辆信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:700px;height:600px;padding:10px;">
+			<div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">车辆信息</div>
+			<form id="fcar" method="post">
+				<table b cellpadding="5" id="t1">
+
+					<tr>
+						<td>机动车辆号牌:</td>
+						<td><input class="easyui-textbox" type="text" name="plate-number" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						<td>厂牌型号:</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>发动机号:</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						<td>颜色</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>初次登记日期:</td>
+						<td><input class="easyui-datebox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						<td>年检有效期:</td>
+						<td><input class="easyui-datebox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+
+					<tr>
+						<td>车架号:</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						<td>车辆评估价格</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						
+						<td>目前已行驶里程数</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>身份证:</td>
+						 <td style="text-align:left">
+						<span class="radioSpan">
+						<input type="radio" name="adminFlag1" value="1">未交付</input>
+						<input type="radio" name="adminFlag2" value="2">原件</input>
+						<input type="radio" name="adminFlag2" value="3">复印件</input>
+						</span>
+						</td>
+
+						<td>车辆购置证/发票:</td>
+						<td style="text-align:left">
+						<span class="radioSpan">
+						<input type="radio" name="adminFlag3" value="0">交付</input>
+						<input type="radio" name="adminFlag3" value="1">未交付</input>
+						</span>
+						</td>
+
+					</tr>
+					<tr>
+						<td>交强保险单</td>
+						<td>
+						<span class="radioSpan">
+						<input type="radio" name="adminFlag4" value="0">交付</input>
+						<input type="radio" name="adminFlag4" value="1">未交付</input>
+						</span>
+						</td>
+						<td>车辆钥匙</td>
+						<td>
+						<span class="radioSpan">
+						<input type="radio" name="adminFlag5" value="0">交付</input>
+						<input type="radio" name="adminFlag5" value="1">未交付</input>
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td>机动车登记证</td>
+						<td>
+						<span class="radioSpan">
+						<input type="radio" name="adminFlag6" value="0">交付</input>
+						<input type="radio" name="adminFlag6" value="1">未交付</input>
+						</span>
+						</td>
+						<td>商业保险单</td>
+						<td>
+						<span class="radioSpan">
+						<input type="radio" name="adminFlag7" value="0">交付</input>
+						<input type="radio" name="adminFlag7" value="1">未交付</input>
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td>车辆行驶证</td>
+						<td>
+						<span class="radioSpan">
+						<input type="radio" name="adminFlag8" value="0">交付</input>
+						<input type="radio" name="adminFlag8" value="1">未交付</input>
+						</span>
+						</td>
+						<td>车辆原始发票</td>
+						<td>
+						<span class="radioSpan">
+						<input type="radio" name="adminFlag9" value="0">交付</input>
+						<input type="radio" name="adminFlag9" value="1">未交付</input>
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td>车辆完税证</td>
+						<td>
+						<span class="radioSpan">
+						<input type="radio" name="adminFlag10" value="0">交付</input>
+						<input type="radio" name="adminFlag10" value="1">未交付</input>
+						</span>
+						</td>
+						<td>进口车辆证明</td>
+						<td>
+						<span class="radioSpan">
+						<input type="radio" name="adminFlag11" value="0">交付</input>
+						<input type="radio" name="adminFlag11" value="1">未交付</input>
+						</span>
+						</td>
+					</tr>
+				</table>
+					
+				
+			
+			<div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">车内物品详单</div>
+			
+				<table  cellpadding="5" id="t1">
+
+					<tr>
+						<td>物品名称</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 112px;"></input>
+						</td>
+						
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 112px;"></input>
+						</td>
+						
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 112px;"></input>
+						</td>
+						
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 112px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>物品数量</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 112px;"></input>
+						</td>
+						
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 112px;"></input>
+						</td>
+						
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 112px;"></input>
+						</td>
+						
+						
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 112px;"></input>
+						</td>
+					</tr>
+				</table>
+
+				 
+			<div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">附件列表</div>
+			
+				<table  cellpadding="5" id="cart1">
+
+					<tr>
+						<td>抵押车辆评估表</td>
+						<td><input class="easyui-filebox" name="file1"  style="width:100%">
+							
+						</td>
+						<td>附件大小</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>车辆照片</td>
+						<td><input class="easyui-filebox" name="file2"  style="width:100%">
+						</td>
+						<td>附件大小</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>车辆登记证书</td>
+						<td><input class="easyui-filebox" name="file3"  style="width:100%">
+						</td>
+						<td>附件大小</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>车辆行驶证副本</td>
+						<td><input class="easyui-filebox" name="file4"  style="width:100%">
+						</td>
+						<td>附件大小</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>保单（交强险）</td>
+						<td><input class="easyui-filebox" name="file5"  style="width:100%">
+						</td>
+						<td>附件大小</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>保单（商业险）</td>
+						<td><input class="easyui-filebox" name="file6"  style="width:100%">
+						</td>
+						<td>附件大小</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>其他车辆附件</td>
+						<td><input class="easyui-filebox" name="file7"  style="width:100%">
+						</td>
+						<td>附件大小</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						
+					</tr>
+				</table>
+
+			</form>
+			
+			<div style="text-align:center;padding:10px;">
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="submitForm()">提交</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="clearForm()">重置</a>
+			</div>
+		</div>
+		
+						<div id="customer_credit" class="easyui-window" title="客户信用信息录入" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:700px;height:360px;padding:10px;">
+			<form id="customer_credit_form" method="post">
+			<div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">资产信息</div>			
+				<table cellpadding="5" style="border:1px solid #ccc ;" id="t1">
+
+					<tr>
+						<td>有无房产</td>
+						<td><input class="easyui-combobox" type="text" name="name" data-options="required:true" style="width: 160px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</input>
+						</td>
+						<td>有无房贷</td>
+						<td><input class="easyui-combobox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>有无车产</td>
+						<td><input class="easyui-combobox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						<td>有无车贷</td>
+						<td><input class="easyui-combobox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+				</table>
+			<div style="padding:3px 2px;border-bottom:1px solid #ccc;margin-bottom: 8px;text-align:center;">信用信息</div>
+			<table cellpadding="5" style="border:1px solid #ccc ;" id="t1">
+
+					<tr>
+						<td>信用卡,贷款最大逾期状况(24个月内)</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						<td>信用卡，贷款累计逾期次数(24个月内)</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>信用卡额度使用率</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						<td>信用卡，贷款审批查询次数(6个月内)</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+					<tr>
+						<td>有无其他信用贷款</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+						<td>有无信用卡</td>
+						<td><input class="easyui-textbox" type="text" name="name" data-options="required:true" style="width: 160px;"></input>
+						</td>
+					</tr>
+				</table>
+
+			</form>
+			<div style="text-align:center;padding:10px;">
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" id="c1">保存</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="submitForm()" id="b1">提交</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-back" id="c1">返回</a>
+			</div>
+		</div>
+	<script>
+	
+	function submitForm() {
+		var customer = {"customerEducation":$('#Education').val(),
+  				"customerPhone":$('#customerPhone').val(),
+				"customerTel":$('#Tel').val(),
+				"customerMarry":$('#Marry').val(),
+				"customerChild":$('#Child').val(),
+				"customerHouse":$('#House').val(),
+				"customerChum":$('#Chum').val(),
+				"customerNewAddress":$('#NewAddress').val(),
+				"customerType":$('#Type').val(),
+				"customerCompany":$('#Company').val(),
+				"customerComAdderss":$('#ComAdderss').val(),
+				"customerComNun":$('#ComNun').val(),
+				"customerPostcode":$('#Postcode').val(),
+				"customerJoinCom":$('#JoinCom').val(),
+				"customerDepartment":$('#Department').val(),
+				"customerDuty":$('#Duty').val(),
+				"customerScale":$('#Scale').val(),
+				"customerSort":$('#Sort').val(),
+				"customerQuality":$('#Quality').val(),
+				"customerDemand":$('#Demand').val(),
+				"customerIncome":$('#Income').val(),
+				"customerPayLimit":$('#PayLimit').val(),
+				"customer_lendTime":$('#lendTime').val(),
+				"customerIendLimit":$('#IendLimit').val(),
+				"customerKnow":$('#Know').val(),
+				"customerDate":$('#Date').val(),
+				"customerSaleman":$('#Saleman').val(),
+				"customerCommissioner":$('#Commissioner').val(),
+				"customerIdcard":$('#Idcard').val(),
+				"customerApplication":$('#Application').val(),
+				"customerEnclosure":$('#Enclosure').val()
+		};	
+				var json = $.toJSON(customer);//转换成了JSON对象	
+				$.ajax({
+					   type: "post",//使用POST提交，才可使用消息体
+					   url: "../../customers/add",
+					   data: json,
+					   contentType:"application/json",
+					   async:false,
+					   success: function(msg){
+					     console.info (msg);
+
+					   }
+					}); 
+	}
+	
+	$('#carinfo').datagrid({
+		url : '../../contract/contractList',
+		method : 'POST',
+		loadMsg : '加载中……',
+		queryParams : {
+			contractNumber : $("#contractNumber").val(),
+			contractCompanyname : $("#contractCompanyname").val(),
+			contractStatus :2
+		}
+	});
+	
+	
+		function submitForm() {
+			$('#f2').form('submit', {
+				onSubmit : function() {
+					console.log(123123)
+					return $(this).form('enableValidation').form('validate');
+				}
+			});
+		}
+
+		function clearForm() {
+			$('#f2').form('clear');
+		}
+	</script>
+</body>
+</html>
