@@ -16,7 +16,7 @@ public class SignController {
     private ISignWriteService iSignWriteService;
 
     /**
-     * 添加签约信息
+     * 添加签约信息，添加了注释
      *
      */
     @RequestMapping(value = "/sign/addSign",method = RequestMethod.POST)
