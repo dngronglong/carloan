@@ -329,6 +329,7 @@
     });
     $("#qianYue").click(function () {
         var row = $('#signtable').datagrid('getSelected');
+        alert(row);
         if (row){
             var rows=row.contractCustomerBean;
             var ro=rows.customerIdcardBean;
@@ -361,7 +362,8 @@ $('#signtable').datagrid({
         return s < 10 ? '0' + s: s;
     }
     function submitSignForm() {
-
+        var row = $('#signtable').datagrid('getSelected');
+        alert("sssss"+row);
         //alert($("#sign_bankCard").filebox("getValue"));
         var myDate = new Date();
 //获取当前年
@@ -392,16 +394,18 @@ $('#signtable').datagrid({
             "sign_time":now
         };
         var json=JSON.stringify(datas);
-        console.log(json);
-        console.log(datas);
+        //console.log(json);
+        //console.log(datas);
         $.ajax({
             url: '../../sign/addSign',
             type: 'post', //GET
             data: json,
             contentType:'application/json',
             //timeout:5000,    //超时时间
-            dataType: 'json'    //返回的数据格式：json/org.project.xml/html/script/jsonp/text
-
+            dataType: 'json',    //返回的数据格式：json/org.project.xml/html/script/jsonp/text
+            success:function () {
+                $('#sign').window('close');
+            }
         });
     }
 </script>
